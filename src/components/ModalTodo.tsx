@@ -1,38 +1,48 @@
 import React, { useState } from 'react';
-import { IonButton, IonContent, IonHeader, IonInput } from '@ionic/react';
+import {IonButton, IonContent, IonHeader, IonInput, IonTitle, IonToolbar} from '@ionic/react';
+import crypto from 'crypto';
 import './ModalTodo.css';
 
 const ModalTodo = (props:any) => {
-    const [todoName, setTodoName] = useState('');
+    const [todo, setTodo] = useState(props.todoEdit);
 
     function handleNameTodoChange(e:any) {
-        setTodoName(e.target.value)
+        setTodo({ ...todo, name: e.target.value});
     }
 
     function handleSubmit() {
-        props.addTodo({name: todoName});
+        if (todo.id === '') {
+            props.createTodo({ id: crypto.randomBytes(256), name: todo.name });
+        } else {
+            props.updateTodo(todo);
+        }
+        props.showModal(false);
     }
 
     return (
         <>
             <IonHeader>
-                Adicionar anotação
+                <IonToolbar>
+                    <IonTitle size="large">Adicionar anotação</IonTitle>
+                </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
                 <form>
                     <IonInput placeholder="Anotação"
-                              value={todoName}
+                              value={todo.name}
                               onIonChange={(e) => handleNameTodoChange(e)}
                     />
-                    <div>
+                    <div className="button-actions">
                     <IonButton
-                               color="primary"
-                               type="button" onClick={() => handleSubmit()}
-                    >Salvar</IonButton>
+                        expand="block"
+                        color="primary"
+                        type="button" onClick={() => handleSubmit()}>Salvar
+                    </IonButton>
                         <IonButton
-                                   color="primary"
-                                   type="button" onClick={() => props.showModal(false)}
-                        >Fechar</IonButton>
+                            expand="block"
+                            color="primary"
+                            type="button" onClick={() => props.showModal(false)}>Fechar
+                        </IonButton>
                     </div>
                 </form>
             </IonContent>

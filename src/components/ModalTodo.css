@@ -3,4 +3,14 @@ form {
     flex-direction: column;
     justify-content: space-between;
     height: 70vh;
+    height: 100%;
+}
+
+.button-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+ion-button {
+    width: 100%;
 }

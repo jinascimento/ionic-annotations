@@ -1,29 +1,42 @@
-import { IonHeader, IonPage, IonTitle, IonToolbar, IonIcon, IonModal, IonContent, IonListHeader, IonLabel } from '@ionic/react';
-import { addCircle, pencil, trash } from "ionicons/icons";
+import { IonHeader, IonPage, IonTitle, IonToolbar, IonIcon, IonModal, IonContent, IonListHeader, IonLabel, IonAlert } from '@ionic/react';
+import { addCircle } from "ionicons/icons";
 import React, { useState} from 'react';
 import ModalTodo from '../components/ModalTodo';
+import TodoList from '../components/TodoList';
 import './Home.css';
 
 const Home: React.FC = () => {
-    const [todoList, setTodoList] = useState(Array<{name: string}>());
+    const [todoList, setTodoList] = useState(Array<{id: number, name: string}>());
+    const [todo, setTodo] = useState({id: '', name: ''});
     const [showModal, setShowModal] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
 
-    function addTodo(newTodo:any) {
+    function newTodo() {
+        setTodo({ id: '', name: '' });
+        setShowModal(true);
+    }
+
+    function createTodo(newTodo:any) {
         setTodoList([ ...todoList, newTodo ])
+        setShowAlert(true);
+    }
+
+    function editTodo(todoTarget:any) {
+        setTodo(todoTarget);
+        setShowModal(true);
+    }
+
+    function updateTodo(updateTodo:any) {
+        let newTodoList = todoList;
+        newTodoList.forEach((todo, index) => {
+            if (todo.id === updateTodo.id) { newTodoList[index] = updateTodo }
+        })
+        setTodoList(newTodoList);
+        setShowAlert(true);
     }
 
     function removeTodo(todoToRemove:any) {
-        setTodoList(todoList.filter(todo => todo.name !== todoToRemove.name));
-    }
-
-    function renderTodos() {
-        return todoList.map(todo => (
-            <li key={String(todo.name)}>
-                <span className="todo-title">{todo.name}</span>
-                <IonIcon className="todo-actions" size="26" color="red" icon={pencil} onClick={() => setShowModal(true)}>Plus</IonIcon>
-                <IonIcon className="todo-actions" size="26" icon={trash} onClick={() => removeTodo(todo)}>Plus</IonIcon>
-            </li>
-        ));
+        setTodoList(todoList.filter(todo => todo.id !== todoToRemove.id));
     }
 
     return (
@@ -37,18 +50,24 @@ const Home: React.FC = () => {
             <IonListHeader>
                 <div className="container">
                     <IonLabel>Lista de anotações</IonLabel>
-                    <IonIcon size="26" icon={addCircle} onClick={() => setShowModal(true)}>Plus</IonIcon>
+                    <IonIcon size="26" icon={addCircle} onClick={() => newTodo()} />
                 </div>
             </IonListHeader>
-            <ul>
-                {renderTodos()}
-            </ul>
+            <TodoList list={todoList} editTodo={editTodo} removeTodo={removeTodo}/>
         </IonContent>
         <IonContent>
             <IonModal isOpen={showModal}>
-                <ModalTodo addTodo={addTodo} showModal={setShowModal}></ModalTodo>
+                <ModalTodo createTodo={createTodo}  updateTodo={updateTodo} showModal={setShowModal} todoEdit={todo} />
             </IonModal>
         </IonContent>
+        <IonAlert
+            isOpen={showAlert}
+            onDidDismiss={() => setShowAlert(false)}
+            header={'Muito bem'}
+            message={'Feito com sucesso!'}
+            buttons={['OK']}
+        />
+
     </IonPage>
     );
 };

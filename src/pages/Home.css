@@ -20,24 +20,6 @@ ion-content ion-toolbar {
     width: 80%;
 }
 
-ul {
-    list-style: none;
-    padding-left: calc(var(--ion-safe-area-left, 0px) + 20px);
-}
-
-ion-icon {
-    cursor: pointer;
-}
-
-li {
-    width: 90%;
-    height: 50px;
-    background-color: #C6E48B;
-    display: flex;
-    justify-content: space-evenly;
-    padding: 15px 0;
-    margin-top: 15px;
-}
 
 .todo-title {
     flex-grow: 5;
