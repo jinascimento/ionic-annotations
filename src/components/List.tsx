@@ -5,11 +5,10 @@ interface ContainerProps { }
 
 export const List = (props:any) => {
     return (
-        <div className="container">
-            <ul>
-                {props.children}
-            </ul>
-        </div>
+        <ul>
+            {props.children}
+        </ul>
+
     );
 };
 

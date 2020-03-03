@@ -5,6 +5,16 @@ ion-content ion-toolbar {
 .container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    width: 100%;
     height: 100%;
+    align-items: center;
+}
+
+.content {
+    width: 80%;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
 }
