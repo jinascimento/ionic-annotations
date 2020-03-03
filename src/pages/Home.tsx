@@ -1,7 +1,6 @@
 import { IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { IonModal, IonContent } from '@ionic/react';
 import React, { useState} from 'react';
-import List from '../components/List';
 import ModalTodo from '../components/ModalTodo';
 import './Home.css';
 
@@ -19,7 +18,6 @@ const Home: React.FC = () => {
 
     function addTodo(newTodo:any) {
         setTodoList([ ...todoList, newTodo ])
-        console.log(todoList)
     }
 
     return (
@@ -36,9 +34,9 @@ const Home: React.FC = () => {
         <IonContent>
           <div className="container">
             <div className="content">
-                <List>
+                <ul>
                     {renderTodos()}
-                </List>
+                </ul>
             </div>
           </div>
         </IonContent>
