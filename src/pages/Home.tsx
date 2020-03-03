@@ -1,6 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React from 'react';
-import ExploreContainer from '../components/ExploreContainer';
+import List from '../components/List';
 import './Home.css';
 
 const Home: React.FC = () => {
@@ -8,16 +8,20 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Blank</IonTitle>
+          <IonTitle>Todo List</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer />
+          <div className="container">
+            <IonHeader collapse="condense">
+              <IonToolbar>
+                <IonTitle size="large">Blank</IonTitle>
+              </IonToolbar>
+            </IonHeader>
+            <List items={[1, 2]}>
+                <li>1</li>
+            </List>
+          </div>
       </IonContent>
     </IonPage>
   );
